@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlipZone - Online Shopping Site for Beginners</title>
+    <!-- Use Inter font and embed all required CSS styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* CSS Variables & Global Styles */
+        :root {
+            --fz-blue-600: #2563eb; /* bg-blue-600 */
+            --fz-yellow-400: #facc15; /* text-yellow-400 */
+            --fz-bg-grey: #f1f2f4; /* bg-f1f2f4 */
+            --fz-max-width: 80rem; /* max-w-7xl */
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--fz-bg-grey);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 1. Header Styles */
+        .fz-header {
+            background-color: var(--fz-blue-600);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 0.5rem 1rem; /* py-2 px-4 */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .fz-logo-text {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-style: italic;
+            margin-right: 1.5rem;
+        }
+
+        .fz-logo-accent {
+            color: var(--fz-yellow-400);
+        }
+
+        .fz-search-container {
+            flex-grow: 1;
+            max-width: 40rem;
+            position: relative;
+            display: none; /* hidden on small screens */
+        }
+        
+        .fz-search-input {
+            width: 100%;
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            outline: none;
+            transition: box-shadow 0.2s;
+        }
+
+        .fz-search-icon {
+            position: absolute;
+            right: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.25rem;
+            height: 1.25rem;
+            color: #6b7280;
+        }
+
+        /* 2. Main Content Area */
+        .fz-main-content {
+            max-width: var(--fz-max-width);
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem;
+            padding-bottom: 2.5rem;
+        }
+
+        /* 3. Categories Bar */
+        .fz-category-section {
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+        }
+
+        .fz-category-bar {
+            display: flex;
+            justify-content: space-between;
+            min-width: 700px;
+            padding: 0.75rem 1rem;
+        }
+
+        .fz-category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .fz-category-item:hover {
+            color: var(--fz-blue-600);
+        }
+
+        .fz-category-item img {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 9999px;
+            object-fit: cover;
+        }
+
+        /* 4. Banner Section */
+        .fz-banner-section {
+            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .fz-banner-section img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        /* 5. Product Grid Section */
+        .fz-product-section {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .fz-product-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .fz-product-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .fz-view-all-btn {
+            background-color: var(--fz-blue-600);
+            color: white;
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+        .fz-view-all-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .fz-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .fz-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .fz-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .fz-card img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 0.5rem;
+        }
+
+        .fz-card h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #1f2937;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+
+        .fz-card p:nth-child(3) {
+            color: #10b981; /* text-green-600 */
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .fz-card p:last-child {
+            color: #6b7280;
+            font-size: 0.875rem;
+        }
+
+        /* Media Queries for Responsiveness */
+
+        /* Tablet (sm: breakpoint) */
+        @media (min-width: 640px) {
+            .fz-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        /* Desktop (md: breakpoint) */
+        @media (min-width: 768px) {
+            .fz-header {
+                padding: 0.5rem 1.5rem;
+            }
+            .fz-search-container {
+                display: block; /* Show search on desktop */
+            }
+            .fz-desktop-nav {
+                display: flex;
+                align-items: center;
+                gap: 1.5rem; /* space-x-6 */
+            }
+            .fz-mobile-nav {
+                display: none;
+            }
+            .fz-category-bar {
+                justify-content: space-around;
+                padding: 0.75rem 0;
+            }
+            .fz-main-content {
+                padding: 0 1.5rem;
+            }
+            .fz-product-title {
+                font-size: 1.875rem;
+            }
+            .fz-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- 1. Top Navigation Bar (Fixed blue bar) -->
+    <header class="fz-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between w-full">
+            
+            <!-- Logo & Brand Text -->
+            <div class="flex items-center space-x-2 mr-6">
+                <a href="#" class="fz-logo-text">
+                    <span class="fz-logo-accent">Flip</span>Kart
+                </a>
+                <p class="text-xs italic text-white" style="opacity: 0.8;">
+                    Explore <span class="fz-logo-accent font-semibold">Plus</span>
+                </p>
+            </div>
+
+            <!-- Search Bar (Flexible width) -->
+            <div class="fz-search-container">
+                <div class="relative w-full">
+                    <input type="text" placeholder="Search for products, brands and more"
+                        class="fz-search-input"
+                    >
+                    <svg class="fz-search-icon" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Action Links (Desktop) -->
+            <nav class="fz-desktop-nav ml-6" style="display: none;">
+                <a href="#" class="text-white text-base font-medium hover:text-yellow-400 transition">
+                    Seller
+                </a>
+                
+                <!-- Login Dropdown Placeholder -->
+                <div class="relative group">
+                    <button class="bg-white text-blue-600 px-4 py-1.5 rounded-lg text-base font-semibold transition" style="color: var(--fz-blue-600); background-color: white; padding: 0.375rem 1rem; border-radius: 0.5rem; font-weight: 600; font-size: 1rem;">
+                        Login
+                    </button>
+                    <!-- Simplified dropdown for CSS -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl" style="display: none; position: absolute; right: 0; margin-top: 0.5rem; width: 12rem; background-color: white; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+                        <a href="#" style="display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151;">My Profile</a>
+                        <a href="#" style="display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151;">Orders</a>
+                        <a href="#" style="display: block; padding: 0.5rem 1rem; font-size: 0.875rem; color: #374151;">Wishlist</a>
+                    </div>
+                </div>
+
+                <a href="#" class="flex items-center space-x-1 text-white text-base font-medium hover:text-yellow-400 transition" style="display: flex; align-items: center; gap: 0.25rem; color: white;">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 1.5rem; height: 1.5rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    <span>Cart</span>
+                </a>
+            </nav>
+
+             <!-- Mobile Menu/Search Icon (Visible on small screens) -->
+             <div class="flex items-center space-x-4 md:hidden">
+                <button class="text-white hover:text-yellow-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+                <button class="text-white hover:text-yellow-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="fz-main-content">
+
+        <!-- 2. Main Categories Bar (Scrollable on mobile) -->
+        <section class="fz-category-section category-scroll">
+            <div class="fz-category-bar">
+                <!-- Category Item -->
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/0056b3/ffffff?text=Top" alt="Top Offers" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Top Offers</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/28a745/ffffff?text=Mobiles" alt="Mobiles" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Mobiles</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/ffc107/000000?text=Elec" alt="Electronics" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Electronics</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/6f42c1/ffffff?text=Fashion" alt="Fashion" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Fashion</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/dc3545/ffffff?text=Home" alt="Home" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Home & Furniture</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/fd7e14/ffffff?text=Appl" alt="Appliances" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Appliances</span>
+                </div>
+                <div class="fz-category-item">
+                    <img src="https://placehold.co/64x64/17a2b8/ffffff?text=Travel" alt="Travel" >
+                    <span class="text-sm font-medium" style="margin-top: 0.25rem;">Travel</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Promotional Banner Area -->
+        <section class="fz-banner-section">
+            <img src="https://placehold.co/1200x200/e91e63/ffffff?text=BIG+BILLION+DAYS+SALE" alt="Main Banner" 
+                 onerror="this.src='https://placehold.co/1200x200/e91e63/ffffff?text=BIG+SALE+BANNER'"
+            >
+        </section>
+
+        <!-- 4. Best of Electronics Product Grid -->
+        <section class="fz-product-section">
+            <div class="fz-product-header">
+                <h2 class="fz-product-title">Best of Electronics</h2>
+                <button class="fz-view-all-btn">
+                    VIEW ALL
+                </button>
+            </div>
+
+            <div class="fz-grid">
+                <!-- Product Card 1 -->
+                <div class="fz-card">
+                    <img src="headphones.jpg" alt="Headphones">
+                    <h3>Boat Rockerz 450 Pro</h3>
+                    <p>₹999</p>
+                    <p>Min 40% Off</p>
+                </div>
+                <!-- Product Card 2 -->
+                <div class="fz-card">
+                    <img src="keyboard.jpg" alt="Monitor">
+                    <h3>Samsung 27" LED Monitor</h3>
+                    <p>₹7,499</p>
+                    <p>Big Discount</p>
+                </div>
+                <!-- Product Card 3 -->
+                <div class="fz-card">
+                    <img src="mouse.jpg" alt="Smartwatch">
+                    <h3>Noise ColorFit Pro 3</h3>
+                    <p>₹1,999</p>
+                    <p>Grab Now</p>
+                </div>
+                <!-- Product Card 4 -->
+                <div class="fz-card">
+                    <img src="mouse.jpg" alt="Wireless Mouse">
+                    <h3>HP Wireless Mouse X200</h3>
+                    <p>₹349</p>
+                    <p>Best Sellers</p>
+                </div>
+                <!-- Product Card 5 -->
+                <div class="fz-card">
+                    <img src="monitor.jpg" alt="Mechanical Keyboard">
+                    <h3>Cosmic Byte Keyboard</h3>
+                    <p>₹1,499</p>
+                    <p>Deal of the Day</p>
+                </div>
+            </div>
+     
+
+    </main>
+
+</body>
+</html>
