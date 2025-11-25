@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FlipZone - Online Shopping Site for Beginners</title>
-    <!-- Use Inter font and embed all required CSS styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         
-        /* CSS Variables & Global Styles */
+
         :root {
             --fz-blue-600: #2563eb; /* bg-blue-600 */
             --fz-yellow-400: #facc15; /* text-yellow-400 */
@@ -24,7 +23,7 @@
             padding: 0;
         }
 
-        /* 1. Header Styles */
+
         .fz-header {
             background-color: var(--fz-blue-600);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
@@ -74,8 +73,6 @@
             height: 1.25rem;
             color: #6b7280;
         }
-
-        /* 2. Main Content Area */
         .fz-main-content {
             max-width: var(--fz-max-width);
             margin-left: auto;
@@ -84,7 +81,7 @@
             padding-bottom: 2.5rem;
         }
 
-        /* 3. Categories Bar */
+
         .fz-category-section {
             background-color: white;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -119,7 +116,7 @@
             object-fit: cover;
         }
 
-        /* 4. Banner Section */
+    
         .fz-banner-section {
             margin-bottom: 1.5rem;
             border-radius: 0.5rem;
@@ -133,7 +130,7 @@
             object-fit: cover;
         }
 
-        /* 5. Product Grid Section */
+    
         .fz-product-section {
             background-color: white;
             padding: 1rem;
@@ -215,18 +212,14 @@
         .fz-card p:last-child {
             color: #6b7280;
             font-size: 0.875rem;
+        
         }
 
-        /* Media Queries for Responsiveness */
-
-        /* Tablet (sm: breakpoint) */
         @media (min-width: 640px) {
             .fz-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
-        }
-
-        /* Desktop (md: breakpoint) */
+    
         @media (min-width: 768px) {
             .fz-header {
                 padding: 0.5rem 1.5rem;
@@ -419,4 +412,5 @@
     </main>
 
 </body>
+
 </html>
